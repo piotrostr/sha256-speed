@@ -1,8 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"io"
-	"log"
 	"os"
 	"time"
 
@@ -12,13 +12,13 @@ import (
 func LoadTheTestImage() []byte {
 	file, err := os.Open("../test.jpg")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	defer file.Close()
 
 	contents, err := io.ReadAll(file)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	return contents
@@ -31,10 +31,10 @@ func main() {
 	hash := sha3.New256()
 	n, err := hash.Write(input)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	// this could be structured logged
-	log.Printf("Sum: 0x%x", hash.Sum(nil))
-	log.Printf("Took: %s", time.Since(start))
-	log.Printf("Input Size: %dB", n)
+	fmt.Printf("Sum: 0x%x\n", hash.Sum(nil))
+	fmt.Printf("Took: %s\n", time.Since(start))
+	fmt.Printf("Input Size: %dB\n", n)
 }
